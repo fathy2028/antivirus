@@ -196,21 +196,47 @@ def restore_quarantined_file(quarantine_id):
         logging.error(f"Failed to restore {quarantine_id} from {quarantined_filepath} to {original_path}: {e}")
 
 def list_quarantine():
-     manifest = load_quarantine_manifest()
-     if not manifest:
-         print("Quarantine is empty.")
-         return
-     print("Quarantined Items:")
-     print("-" * 40)
-     for qid, item in manifest.items():
-         ts = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(item.get('timestamp', 0)))
-         print(f"ID          : {qid}")
-         print(f"Original Path: {item.get('original_path', 'N/A')}")
-         print(f"Reason      : {item.get('reason', 'N/A')}")
-         print(f"Date        : {ts}")
-         print(f"Stored As   : {item.get('quarantined_filename', 'N/A')}")
-         print("-" * 40)
+    manifest = load_quarantine_manifest()
+    if not manifest:
+        return []
+    
+    items = []
+    for qid, item in manifest.items():
+        ts = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(item.get('timestamp', 0)))
+        items.append({
+            'id': qid,
+            'original_path': item.get('original_path', 'N/A'),
+            'reason': item.get('reason', 'N/A'),
+            'date': ts
+        })
+    return items
 
+def delete_quarantined_file(quarantine_id):
+    manifest = load_quarantine_manifest()
+    if quarantine_id not in manifest:
+        print(f"Error: Quarantine ID {quarantine_id} not found.")
+        logging.warning(f"Attempt to delete non-existent quarantine ID: {quarantine_id}")
+        return False
+
+    item = manifest[quarantine_id]
+    quarantined_filepath = os.path.join(CONFIG["quarantine_dir"], item["quarantined_filename"])
+
+    try:
+        # Delete the quarantined file
+        if os.path.exists(quarantined_filepath):
+            os.remove(quarantined_filepath)
+            logging.info(f"Deleted quarantined file: {quarantined_filepath}")
+        
+        # Remove from manifest
+        del manifest[quarantine_id]
+        save_quarantine_manifest(manifest)
+        logging.info(f"Removed quarantine entry for ID: {quarantine_id}")
+        print(f"Successfully deleted quarantined item (ID: {quarantine_id})")
+        return True
+    except Exception as e:
+        logging.error(f"Failed to delete quarantined file {quarantined_filepath}: {e}")
+        print(f"Error deleting quarantined file: {e}")
+        return False
 
 # --- Removal Handling ---
 def remove_file(file_path, reason):
@@ -228,11 +254,12 @@ def remove_file(file_path, reason):
 
 # --- Scanner Engine ---
 def scan_path(target_path, signatures, action):
-    scan_summary = {"files_scanned": 0, "threats_found": 0, "actions_taken": 0}
+    scan_summary = {"files_scanned": 0, "threats_found": 0, "actions_taken": 0, "errors": 0}
     target_path = Path(target_path) # Use pathlib for easier path handling
 
     if not target_path.exists():
         logging.error(f"Path does not exist: {target_path}")
+        scan_summary["errors"] += 1
         return scan_summary
 
     items_to_scan = []
@@ -245,8 +272,8 @@ def scan_path(target_path, signatures, action):
                 items_to_scan.append(Path(root) / file)
     else:
          logging.warning(f"Target path is neither a file nor a directory: {target_path}")
+         scan_summary["errors"] += 1
          return scan_summary
-
 
     logging.info(f"Starting scan on {target_path}...")
     for file_path in items_to_scan:
@@ -263,16 +290,20 @@ def scan_path(target_path, signatures, action):
         malware_name = "N/A"
 
         # 1. Check Signature
-        sig_detected, sig_name, file_hash = check_signature(file_path_str, signatures)
-        if sig_detected:
-            detected = True
-            detection_type = "Signature"
-            malware_name = sig_name
-            logging.warning(f"SIGNATURE DETECTED: {file_path_str} -> {malware_name} ({file_hash})")
+        try:
+            sig_detected, sig_name, file_hash = check_signature(file_path_str, signatures)
+            if sig_detected:
+                detected = True
+                detection_type = "Signature"
+                malware_name = sig_name
+                logging.warning(f"SIGNATURE DETECTED: {file_path_str} -> {malware_name} ({file_hash})")
+        except Exception as e:
+            logging.error(f"Error during signature check for {file_path_str}: {e}")
+            scan_summary["errors"] += 1
+            continue
         
         # 2. Check Heuristics (if no signature match or configured always)
-        # Add condition: and CONFIG["heuristic_level"] > 0 and os.path.getsize(file_path_str) < CONFIG["max_file_size_heuristic"]
-        if not detected and CONFIG["heuristic_level"] > 0 :
+        if not detected and CONFIG["heuristic_level"] > 0:
              try:
                  if file_path.stat().st_size <= CONFIG["max_file_size_heuristic"]:
                      heur_detected, heur_reason = check_heuristics(file_path_str)
@@ -283,8 +314,9 @@ def scan_path(target_path, signatures, action):
                          logging.warning(f"HEURISTIC DETECTED: {file_path_str} -> {malware_name}")
                  else:
                      logging.debug(f"Skipping heuristic scan for large file: {file_path_str}")
-             except OSError as e:
-                  logging.warning(f"Cannot get size for heuristic check: {file_path_str}: {e}")
+             except Exception as e:
+                  logging.error(f"Error during heuristic check for {file_path_str}: {e}")
+                  scan_summary["errors"] += 1
 
         # 3. Take Action
         if detected:
@@ -300,12 +332,13 @@ def scan_path(target_path, signatures, action):
             
             if action_taken and action != "report":
                  scan_summary["actions_taken"] += 1
+            elif not action_taken:
+                scan_summary["errors"] += 1
         else:
              logging.debug(f"Clean: {file_path_str}")
 
-
     logging.info("Scan Complete.")
-    logging.info(f"Summary: Files Scanned: {scan_summary['files_scanned']}, Threats Found: {scan_summary['threats_found']}, Actions Taken: {scan_summary['actions_taken']}")
+    logging.info(f"Summary: Files Scanned: {scan_summary['files_scanned']}, Threats Found: {scan_summary['threats_found']}, Actions Taken: {scan_summary['actions_taken']}, Errors: {scan_summary['errors']}")
     return scan_summary
 
 
@@ -346,9 +379,7 @@ if __name__ == "__main__":
         elif args.q_command == "restore":
              restore_quarantined_file(args.id)
         elif args.q_command == "delete":
-             # Implement permanent deletion from quarantine store + manifest
-             print(f"Quarantine delete for ID {args.id} - not fully implemented yet.")
-             pass
+             delete_quarantined_file(args.id)
     elif args.command == "update":
          # Basic update: Just copy the new DB file or change config to point to it
          # A real update would involve downloading, verifying, merging etc.

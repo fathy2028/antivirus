@@ -15,3 +15,84 @@
 2025-04-24 12:44:09,595 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Desktop\lib...
 2025-04-24 12:44:09,795 [INFO] Scan Complete.
 2025-04-24 12:44:09,795 [INFO] Summary: Files Scanned: 7, Threats Found: 0, Actions Taken: 0
+2025-04-24 16:53:42,070 [INFO] Starting processing of MalwareBazaar CSV: full.csv
+2025-04-24 16:53:42,102 [WARNING] First non-comment row doesn't look like expected header: ['2025-04-24 10:02:57', ' "f09565014effccfaae4c47a2b92ebd8b2525ac6480774aa809d59955ef439241"', ' "6f3fe0c3412f02a50280e7344089f6ca"', ' "3ee9670cf7399a660fbc674b1b293250e8de0108"', ' "abuse_ch"', ' "na"', ' "elf"', ' "application/x-executable"', ' "Prometei"', ' "n/a"', ' "n/a"', ' "n/a"', ' "12288:qb143S0q+8eXS1/f2Wc3slC3yjTjMv+9XSJhBXEsV3b9gh4J8zMSv7MzOup8MplM:qmShf4OTjMgXSJhBXEsVrmz9MOup1Khj"', ' "T181155B653700EF5EF39DE27108F287E046D125F31AD24296A278C71C6EE161D28AFDE9"']. Attempting to process.
+2025-04-24 16:53:42,145 [INFO] Finished processing. Created signatures.db with 1108 unique signatures.
+2025-04-24 16:53:50,260 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 16:53:50,265 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Desktop\lib...
+2025-04-24 16:53:50,387 [INFO] Scan Complete.
+2025-04-24 16:53:50,388 [INFO] Summary: Files Scanned: 7, Threats Found: 0, Actions Taken: 0
+2025-04-24 17:10:47,663 [INFO] Starting processing of MalwareBazaar CSV: full.csv
+2025-04-24 17:10:47,665 [WARNING] First non-comment row doesn't look like expected header: ['2025-04-24 10:02:57', ' "f09565014effccfaae4c47a2b92ebd8b2525ac6480774aa809d59955ef439241"', ' "6f3fe0c3412f02a50280e7344089f6ca"', ' "3ee9670cf7399a660fbc674b1b293250e8de0108"', ' "abuse_ch"', ' "na"', ' "elf"', ' "application/x-executable"', ' "Prometei"', ' "n/a"', ' "n/a"', ' "n/a"', ' "12288:qb143S0q+8eXS1/f2Wc3slC3yjTjMv+9XSJhBXEsV3b9gh4J8zMSv7MzOup8MplM:qmShf4OTjMgXSJhBXEsVrmz9MOup1Khj"', ' "T181155B653700EF5EF39DE27108F287E046D125F31AD24296A278C71C6EE161D28AFDE9"']. Attempting to process.
+2025-04-24 17:10:47,694 [INFO] Finished processing. Created signatures.db with 1108 unique signatures.
+2025-04-24 17:11:31,489 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:11:31,491 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Desktop\lib...
+2025-04-24 17:11:31,496 [INFO] Scan Complete.
+2025-04-24 17:11:31,497 [INFO] Summary: Files Scanned: 7, Threats Found: 0, Actions Taken: 0
+2025-04-24 17:13:19,483 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:13:19,490 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Pictures\Screenshots...
+2025-04-24 17:13:20,557 [INFO] Scan Complete.
+2025-04-24 17:13:20,558 [INFO] Summary: Files Scanned: 377, Threats Found: 0, Actions Taken: 0
+2025-04-24 17:14:48,030 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:14:48,031 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Desktop\GP\Self-Healing-Framework\the_separate_system_parts\first-mapping...
+2025-04-24 17:14:48,099 [INFO] Scan Complete.
+2025-04-24 17:14:48,099 [INFO] Summary: Files Scanned: 4, Threats Found: 0, Actions Taken: 0
+2025-04-24 17:14:59,236 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:15:34,141 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:15:34,152 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Desktop\antivirus...
+2025-04-24 17:15:34,828 [INFO] Scan Complete.
+2025-04-24 17:15:34,828 [INFO] Summary: Files Scanned: 48, Threats Found: 0, Actions Taken: 0
+2025-04-24 17:15:48,264 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:15:48,274 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Pictures\Screenshots...
+2025-04-24 17:15:48,701 [INFO] Scan Complete.
+2025-04-24 17:15:48,703 [INFO] Summary: Files Scanned: 377, Threats Found: 0, Actions Taken: 0
+2025-04-24 17:16:48,483 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:16:48,497 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Pictures\Screenshots...
+2025-04-24 17:16:48,911 [INFO] Scan Complete.
+2025-04-24 17:16:48,912 [INFO] Summary: Files Scanned: 377, Threats Found: 0, Actions Taken: 0
+2025-04-24 17:16:54,844 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:16:54,854 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Pictures\Screenshots...
+2025-04-24 17:16:55,287 [INFO] Scan Complete.
+2025-04-24 17:16:55,287 [INFO] Summary: Files Scanned: 377, Threats Found: 0, Actions Taken: 0
+2025-04-24 17:16:58,913 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:16:58,921 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Pictures\Screenshots...
+2025-04-24 17:16:59,347 [INFO] Scan Complete.
+2025-04-24 17:16:59,347 [INFO] Summary: Files Scanned: 377, Threats Found: 0, Actions Taken: 0
+2025-04-24 17:18:20,183 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:18:20,190 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Pictures\Screenshots...
+2025-04-24 17:18:20,483 [INFO] Scan Complete.
+2025-04-24 17:18:20,483 [INFO] Summary: Files Scanned: 377, Threats Found: 0, Actions Taken: 0, Errors: 0
+2025-04-24 17:18:31,074 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:19:00,467 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:19:40,082 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:20:16,359 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:20:17,242 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Desktop\flutter codes...
+2025-04-24 17:20:54,795 [WARNING] HEURISTIC DETECTED: C:\Users\Lenovo\OneDrive\Desktop\flutter codes\mobilelab\lab5\windows\runner\runner.exe.manifest -> Heuristic Score: 2 (Double Extension)
+2025-04-24 17:20:54,796 [INFO] Threat reported (no action taken): C:\Users\Lenovo\OneDrive\Desktop\flutter codes\mobilelab\lab5\windows\runner\runner.exe.manifest
+2025-04-24 17:20:56,221 [INFO] Scan Complete.
+2025-04-24 17:20:56,221 [INFO] Summary: Files Scanned: 2225, Threats Found: 1, Actions Taken: 0, Errors: 0
+2025-04-24 17:50:57,079 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:50:57,094 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Pictures\Screenshots...
+2025-04-24 17:50:57,773 [INFO] Scan Complete.
+2025-04-24 17:50:57,774 [INFO] Summary: Files Scanned: 377, Threats Found: 0, Actions Taken: 0, Errors: 0
+2025-04-24 17:51:21,389 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:51:21,444 [INFO] Starting scan on C:\Users\Lenovo\Downloads...
+2025-04-24 17:52:00,980 [INFO] Scan Complete.
+2025-04-24 17:52:00,980 [INFO] Summary: Files Scanned: 307, Threats Found: 0, Actions Taken: 0, Errors: 0
+2025-04-24 17:52:09,025 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:52:09,052 [INFO] Starting scan on C:\Users\Lenovo\Downloads...
+2025-04-24 17:52:16,619 [INFO] Scan Complete.
+2025-04-24 17:52:16,620 [INFO] Summary: Files Scanned: 307, Threats Found: 0, Actions Taken: 0, Errors: 0
+2025-04-24 17:52:25,904 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:52:26,644 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Desktop\flutter codes...
+2025-04-24 17:52:49,646 [WARNING] HEURISTIC DETECTED: C:\Users\Lenovo\OneDrive\Desktop\flutter codes\mobilelab\lab5\windows\runner\runner.exe.manifest -> Heuristic Score: 2 (Double Extension)
+2025-04-24 17:52:49,646 [INFO] Threat reported (no action taken): C:\Users\Lenovo\OneDrive\Desktop\flutter codes\mobilelab\lab5\windows\runner\runner.exe.manifest
+2025-04-24 17:52:49,766 [INFO] Scan Complete.
+2025-04-24 17:52:49,766 [INFO] Summary: Files Scanned: 2225, Threats Found: 1, Actions Taken: 0, Errors: 0
+2025-04-24 17:53:29,123 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 17:53:29,688 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Desktop\flutter codes...
+2025-04-24 17:53:32,203 [WARNING] HEURISTIC DETECTED: C:\Users\Lenovo\OneDrive\Desktop\flutter codes\mobilelab\lab5\windows\runner\runner.exe.manifest -> Heuristic Score: 2 (Double Extension)
+2025-04-24 17:53:32,204 [WARNING] Removing infected file: C:\Users\Lenovo\OneDrive\Desktop\flutter codes\mobilelab\lab5\windows\runner\runner.exe.manifest (Reason: Heuristic: Heuristic Score: 2 (Double Extension))
+2025-04-24 17:53:32,210 [INFO] File removed successfully: C:\Users\Lenovo\OneDrive\Desktop\flutter codes\mobilelab\lab5\windows\runner\runner.exe.manifest
+2025-04-24 17:53:32,220 [INFO] Scan Complete.
+2025-04-24 17:53:32,220 [INFO] Summary: Files Scanned: 2225, Threats Found: 1, Actions Taken: 1, Errors: 0
