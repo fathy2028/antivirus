@@ -1,0 +1,17 @@
+2025-04-24 12:34:56,867 [INFO] Starting processing of MalwareBazaar CSV: full.csv
+2025-04-24 12:34:56,868 [WARNING] First non-comment row doesn't look like expected header: ['2025-04-24 10:02:57', ' "f09565014effccfaae4c47a2b92ebd8b2525ac6480774aa809d59955ef439241"', ' "6f3fe0c3412f02a50280e7344089f6ca"', ' "3ee9670cf7399a660fbc674b1b293250e8de0108"', ' "abuse_ch"', ' "na"', ' "elf"', ' "application/x-executable"', ' "Prometei"', ' "n/a"', ' "n/a"', ' "n/a"', ' "12288:qb143S0q+8eXS1/f2Wc3slC3yjTjMv+9XSJhBXEsV3b9gh4J8zMSv7MzOup8MplM:qmShf4OTjMgXSJhBXEsVrmz9MOup1Khj"', ' "T181155B653700EF5EF39DE27108F287E046D125F31AD24296A278C71C6EE161D28AFDE9"']. Attempting to process.
+2025-04-24 12:34:56,874 [INFO] Finished processing. Created signatures.db with 1108 unique signatures.
+2025-04-24 12:35:40,617 [INFO] Starting processing of MalwareBazaar CSV: full.csv
+2025-04-24 12:35:40,618 [WARNING] First non-comment row doesn't look like expected header: ['2025-04-24 10:02:57', ' "f09565014effccfaae4c47a2b92ebd8b2525ac6480774aa809d59955ef439241"', ' "6f3fe0c3412f02a50280e7344089f6ca"', ' "3ee9670cf7399a660fbc674b1b293250e8de0108"', ' "abuse_ch"', ' "na"', ' "elf"', ' "application/x-executable"', ' "Prometei"', ' "n/a"', ' "n/a"', ' "n/a"', ' "12288:qb143S0q+8eXS1/f2Wc3slC3yjTjMv+9XSJhBXEsV3b9gh4J8zMSv7MzOup8MplM:qmShf4OTjMgXSJhBXEsVrmz9MOup1Khj"', ' "T181155B653700EF5EF39DE27108F287E046D125F31AD24296A278C71C6EE161D28AFDE9"']. Attempting to process.
+2025-04-24 12:35:40,625 [INFO] Finished processing. Created signatures.db with 1108 unique signatures.
+2025-04-24 12:35:58,037 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 12:35:58,075 [INFO] Starting scan on /Users/melkmeshi/Desktop...
+2025-04-24 12:36:05,841 [INFO] Scan Complete.
+2025-04-24 12:36:05,841 [INFO] Summary: Files Scanned: 2609, Threats Found: 0, Actions Taken: 0
+2025-04-24 12:43:06,581 [INFO] Starting processing of MalwareBazaar CSV: full.csv
+2025-04-24 12:43:06,750 [WARNING] First non-comment row doesn't look like expected header: ['2025-04-24 10:02:57', ' "f09565014effccfaae4c47a2b92ebd8b2525ac6480774aa809d59955ef439241"', ' "6f3fe0c3412f02a50280e7344089f6ca"', ' "3ee9670cf7399a660fbc674b1b293250e8de0108"', ' "abuse_ch"', ' "na"', ' "elf"', ' "application/x-executable"', ' "Prometei"', ' "n/a"', ' "n/a"', ' "n/a"', ' "12288:qb143S0q+8eXS1/f2Wc3slC3yjTjMv+9XSJhBXEsV3b9gh4J8zMSv7MzOup8MplM:qmShf4OTjMgXSJhBXEsVrmz9MOup1Khj"', ' "T181155B653700EF5EF39DE27108F287E046D125F31AD24296A278C71C6EE161D28AFDE9"']. Attempting to process.
+2025-04-24 12:43:06,869 [INFO] Finished processing. Created signatures.db with 1108 unique signatures.
+2025-04-24 12:44:09,595 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-24 12:44:09,595 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Desktop\lib...
+2025-04-24 12:44:09,795 [INFO] Scan Complete.
+2025-04-24 12:44:09,795 [INFO] Summary: Files Scanned: 7, Threats Found: 0, Actions Taken: 0
