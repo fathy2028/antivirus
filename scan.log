@@ -96,3 +96,41 @@
 2025-04-24 17:53:32,210 [INFO] File removed successfully: C:\Users\Lenovo\OneDrive\Desktop\flutter codes\mobilelab\lab5\windows\runner\runner.exe.manifest
 2025-04-24 17:53:32,220 [INFO] Scan Complete.
 2025-04-24 17:53:32,220 [INFO] Summary: Files Scanned: 2225, Threats Found: 1, Actions Taken: 1, Errors: 0
+2025-04-25 03:44:21,607 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-25 03:47:58,949 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-25 03:47:58,984 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Desktop\spring...
+2025-04-25 03:48:00,619 [INFO] Scan Complete.
+2025-04-25 03:48:00,620 [INFO] Summary: Files Scanned: 63, Threats Found: 0, Actions Taken: 0, Errors: 0
+2025-04-25 03:48:37,961 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-25 03:48:38,637 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Desktop\flutter codes...
+2025-04-25 03:48:41,495 [INFO] Scan Complete.
+2025-04-25 03:48:41,496 [INFO] Summary: Files Scanned: 2224, Threats Found: 0, Actions Taken: 0, Errors: 0
+2025-04-25 03:49:00,161 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-25 03:49:00,214 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Desktop\Tor Browser...
+2025-04-25 03:49:01,740 [INFO] Scan Complete.
+2025-04-25 03:49:01,741 [INFO] Summary: Files Scanned: 279, Threats Found: 0, Actions Taken: 0, Errors: 0
+2025-04-25 03:49:13,348 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-25 03:49:13,705 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Desktop\SEC...
+2025-04-25 03:49:18,250 [INFO] Scan Complete.
+2025-04-25 03:49:18,251 [INFO] Summary: Files Scanned: 3113, Threats Found: 0, Actions Taken: 0, Errors: 0
+2025-04-25 03:49:29,809 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-25 03:49:29,819 [INFO] Starting scan on C:\Users\Lenovo\Downloads\SWE212-main...
+2025-04-25 03:49:30,272 [INFO] Scan Complete.
+2025-04-25 03:49:30,272 [INFO] Summary: Files Scanned: 6, Threats Found: 0, Actions Taken: 0, Errors: 0
+2025-04-25 03:49:41,239 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-25 03:49:41,242 [INFO] Starting scan on C:\Users\Lenovo\Downloads\Telegram Desktop...
+2025-04-25 03:49:41,294 [INFO] Scan Complete.
+2025-04-25 03:49:41,294 [INFO] Summary: Files Scanned: 1, Threats Found: 0, Actions Taken: 0, Errors: 0
+2025-04-25 03:49:53,331 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-25 03:49:53,334 [INFO] Starting scan on C:\Users\Lenovo\Downloads\CraxsRat-BEST-ANDROID-RAT-main...
+2025-04-25 03:49:53,378 [INFO] Scan Complete.
+2025-04-25 03:49:53,379 [INFO] Summary: Files Scanned: 1, Threats Found: 0, Actions Taken: 0, Errors: 0
+2025-04-25 03:51:51,172 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-25 03:51:51,182 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Desktop\virustest...
+2025-04-25 03:51:51,220 [INFO] Scan Complete.
+2025-04-25 03:51:51,220 [INFO] Summary: Files Scanned: 35, Threats Found: 0, Actions Taken: 0, Errors: 0
+2025-04-25 03:52:39,693 [INFO] Loaded 1108 signatures from signatures.db
+2025-04-25 03:52:39,781 [INFO] Starting scan on C:\Users\Lenovo\OneDrive\Desktop\cloud...
+2025-04-25 03:52:43,569 [INFO] Scan Complete.
+2025-04-25 03:52:43,569 [INFO] Summary: Files Scanned: 146, Threats Found: 0, Actions Taken: 0, Errors: 0
+2025-04-25 03:53:03,867 [INFO] Loaded 1108 signatures from signatures.db

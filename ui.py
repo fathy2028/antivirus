@@ -158,8 +158,7 @@ class AntivirusUI:
     def run_scan(self, path, action):
         try:
             signatures = load_signatures(CONFIG["signature_db"])
-            results = scan_path(path, signatures, action)
-            
+            results = scan_path(path, signatures, action, CONFIG["heuristic_level"])
             self.root.after(0, self.update_scan_results, results)
         except Exception as e:
             self.root.after(0, self.show_error, str(e))

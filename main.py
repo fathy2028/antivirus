@@ -6,6 +6,8 @@ import argparse
 import logging
 import time
 from pathlib import Path
+import math
+from collections import Counter
 
 # --- Configuration ---
 CONFIG = {
@@ -15,7 +17,8 @@ CONFIG = {
     "log_file": "scan.log",
     "default_action": "report", # report, quarantine, remove
     "heuristic_level": 1, # 0: off, 1: basic (name/size), 2: content (entropy/strings)
-    "max_file_size_heuristic": 50 * 1024 * 1024 # Skip heuristics on huge files
+    "max_file_size_heuristic": 50 * 1024 * 1024, # Skip heuristics on huge files
+    "heuristic_suspicion_threshold": 1
 }
 
 # --- Logging Setup ---
@@ -63,41 +66,58 @@ def check_signature(file_path, signatures):
     return False, None, None # Not detected
 
 # --- Heuristic Handling (Basic Examples) ---
-def check_heuristics(file_path):
+def check_heuristics(file_path, level):
     suspicion_score = 0
     reasons = []
     file_name = os.path.basename(file_path)
     file_ext = os.path.splitext(file_name)[1].lower()
-    
     try:
         file_size = os.path.getsize(file_path)
-
-        # Rule: Suspicious double extensions
-        if file_name.count('.') >= 2 and any(ext in file_name.lower() for ext in ['.exe.', '.scr.', '.com.', '.bat.', '.vbs.']):
-             suspicion_score += 2
-             reasons.append("Double Extension")
-             
-        # Rule: Disguised executable extensions
-        if file_ext in ['.exe', '.scr', '.bat', '.vbs', '.ps1'] and any(doc_ext in file_name.lower() for doc_ext in ['.pdf', '.doc', '.xls', '.jpg']):
-             suspicion_score += 2
-             reasons.append("Disguised Executable")
-
-        # Rule: Very small executable (potential downloader)
-        if file_ext == '.exe' and file_size > 0 and file_size < 50 * 1024: # < 50 KB
-            suspicion_score += 1
-            reasons.append("Small Executable")
-
-        # Add more rules (entropy, strings - requires reading content) if heuristic_level > 1
-        # ... (example entropy calculation or string search) ...
-
+        # Level 1: Name/size based
+        if level >= 1:
+            if file_name.count('.') >= 2 and any(ext in file_name.lower() for ext in ['.exe.', '.scr.', '.com.', '.bat.', '.vbs.']):
+                suspicion_score += 2
+                reasons.append("Double Extension")
+            if file_ext in ['.exe', '.scr', '.bat', '.vbs', '.ps1'] and any(doc_ext in file_name.lower() for doc_ext in ['.pdf', '.doc', '.xls', '.jpg']):
+                suspicion_score += 2
+                reasons.append("Disguised Executable")
+            if file_ext == '.exe' and file_size > 0 and file_size < 50 * 1024:
+                suspicion_score += 1
+                reasons.append("Small Executable")
+        # Level 2: Content-based (applies to all file types)
+        if level >= 2 and file_size > 0:
+            try:
+                sample_size = min(file_size, 1024 * 10)
+                with open(file_path, 'rb') as f:
+                    sample_data = f.read(sample_size)
+                # Entropy
+                if sample_data:
+                    byte_counts = Counter(sample_data)
+                    entropy = 0
+                    for count in byte_counts.values():
+                        p_x = count / sample_size
+                        entropy -= p_x * math.log2(p_x)
+                    if entropy > 7.5:
+                        suspicion_score += 2
+                        reasons.append(f"High Entropy ({entropy:.2f})")
+                # Suspicious strings
+                suspicious_strings = [b"eval(", b"powershell", b"ActiveXObject", b"Shell.Application"]
+                sample_text = sample_data.decode('latin-1', errors='ignore')
+                for s_bytes in suspicious_strings:
+                    s_text = s_bytes.decode('latin-1', errors='ignore')
+                    if s_text in sample_text:
+                        suspicion_score += 1
+                        reasons.append(f"Suspicious String ('{s_text}')")
+            except IOError as e:
+                logging.warning(f"Could not read file content for L2 heuristics {file_path}: {e}")
+            except Exception as e:
+                logging.error(f"Error during L2 heuristic analysis for {file_path}: {e}")
     except OSError as e:
         logging.warning(f"Could not get stats for file {file_path}: {e}")
-        return False, None # Cannot analyze
-
-    if suspicion_score > 1: # Threshold
-         return True, f"Heuristic Score: {suspicion_score} ({', '.join(reasons)})"
-         
-    return False, None # Not suspicious
+        return False, None
+    if suspicion_score > CONFIG["heuristic_suspicion_threshold"]:
+        return True, f"Heuristic Score: {suspicion_score} ({', '.join(reasons)})"
+    return False, None
 
 
 # --- Quarantine Handling ---
@@ -253,42 +273,34 @@ def remove_file(file_path, reason):
         return False
 
 # --- Scanner Engine ---
-def scan_path(target_path, signatures, action):
+def scan_path(target_path, signatures, action, heuristic_level):
     scan_summary = {"files_scanned": 0, "threats_found": 0, "actions_taken": 0, "errors": 0}
-    target_path = Path(target_path) # Use pathlib for easier path handling
-
+    target_path = Path(target_path)
     if not target_path.exists():
         logging.error(f"Path does not exist: {target_path}")
         scan_summary["errors"] += 1
         return scan_summary
-
     items_to_scan = []
     if target_path.is_file():
         items_to_scan.append(target_path)
     elif target_path.is_dir():
-        # Could use Path.rglob('*') for recursion
         for root, _, files in os.walk(target_path):
             for file in files:
                 items_to_scan.append(Path(root) / file)
     else:
-         logging.warning(f"Target path is neither a file nor a directory: {target_path}")
-         scan_summary["errors"] += 1
-         return scan_summary
-
+        logging.warning(f"Target path is neither a file nor a directory: {target_path}")
+        scan_summary["errors"] += 1
+        return scan_summary
     logging.info(f"Starting scan on {target_path}...")
     for file_path in items_to_scan:
         scan_summary["files_scanned"] += 1
-        file_path_str = str(file_path) # Convert back for functions expecting strings
-        
-        if not file_path.is_file(): # Skip directories, symlinks etc.
-             continue
-
+        file_path_str = str(file_path)
+        if not file_path.is_file():
+            continue
         logging.debug(f"Scanning: {file_path_str}")
-
         detected = False
         detection_type = "N/A"
         malware_name = "N/A"
-
         # 1. Check Signature
         try:
             sig_detected, sig_name, file_hash = check_signature(file_path_str, signatures)
@@ -301,23 +313,21 @@ def scan_path(target_path, signatures, action):
             logging.error(f"Error during signature check for {file_path_str}: {e}")
             scan_summary["errors"] += 1
             continue
-        
         # 2. Check Heuristics (if no signature match or configured always)
-        if not detected and CONFIG["heuristic_level"] > 0:
-             try:
-                 if file_path.stat().st_size <= CONFIG["max_file_size_heuristic"]:
-                     heur_detected, heur_reason = check_heuristics(file_path_str)
-                     if heur_detected:
-                         detected = True
-                         detection_type = "Heuristic"
-                         malware_name = heur_reason
-                         logging.warning(f"HEURISTIC DETECTED: {file_path_str} -> {malware_name}")
-                 else:
-                     logging.debug(f"Skipping heuristic scan for large file: {file_path_str}")
-             except Exception as e:
-                  logging.error(f"Error during heuristic check for {file_path_str}: {e}")
-                  scan_summary["errors"] += 1
-
+        if not detected and heuristic_level > 0:
+            try:
+                if file_path.stat().st_size > CONFIG["max_file_size_heuristic"]:
+                    logging.debug(f"Skipping heuristic scan for large file: {file_path_str}")
+                else:
+                    heur_detected, heur_reason = check_heuristics(file_path_str, heuristic_level)
+                    if heur_detected:
+                        detected = True
+                        detection_type = "Heuristic"
+                        malware_name = heur_reason
+                        logging.warning(f"HEURISTIC DETECTED: {file_path_str} -> {malware_name}")
+            except Exception as e:
+                logging.error(f"Error during heuristic check for {file_path_str}: {e}")
+                scan_summary["errors"] += 1
         # 3. Take Action
         if detected:
             scan_summary["threats_found"] += 1
@@ -328,15 +338,13 @@ def scan_path(target_path, signatures, action):
                 action_taken = remove_file(file_path_str, f"{detection_type}: {malware_name}")
             elif action == "report":
                 logging.info(f"Threat reported (no action taken): {file_path_str}")
-                action_taken = True # Reporting is considered an action outcome
-            
+                action_taken = True
             if action_taken and action != "report":
-                 scan_summary["actions_taken"] += 1
+                scan_summary["actions_taken"] += 1
             elif not action_taken:
                 scan_summary["errors"] += 1
         else:
-             logging.debug(f"Clean: {file_path_str}")
-
+            logging.debug(f"Clean: {file_path_str}")
     logging.info("Scan Complete.")
     logging.info(f"Summary: Files Scanned: {scan_summary['files_scanned']}, Threats Found: {scan_summary['threats_found']}, Actions Taken: {scan_summary['actions_taken']}, Errors: {scan_summary['errors']}")
     return scan_summary
@@ -352,6 +360,9 @@ if __name__ == "__main__":
     parser_scan.add_argument("path", help="File or directory path to scan")
     parser_scan.add_argument("--action", choices=["report", "quarantine", "remove"],
                              default=CONFIG["default_action"], help="Action to take on detection")
+    parser_scan.add_argument("--heuristic", type=int, choices=[0, 1, 2],
+                             default=CONFIG["heuristic_level"],
+                             help="Heuristic analysis level (0=off, 1=basic, 2=content)")
     # Add more options like --recursive, --heuristic-level etc.
 
     # Quarantine management commands
@@ -372,7 +383,8 @@ if __name__ == "__main__":
 
     if args.command == "scan":
         signatures = load_signatures(CONFIG["signature_db"])
-        scan_path(args.path, signatures, args.action)
+        heuristic_level_to_use = args.heuristic if hasattr(args, 'heuristic') else CONFIG["heuristic_level"]
+        scan_path(args.path, signatures, args.action, heuristic_level_to_use)
     elif args.command == "quarantine":
         if args.q_command == "list":
              list_quarantine()
